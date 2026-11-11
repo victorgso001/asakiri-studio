@@ -64,8 +64,15 @@ struct CourseProject {
     title: String,
 }
 
+/// Courses are stored in the system temporary directory (`/tmp` on Linux)
+/// instead of a user-picked location. Replace this with the original
+/// `parent_path` argument to restore choosing a folder in the native dialog.
+fn course_parent_dir() -> std::path::PathBuf {
+    std::env::temp_dir()
+}
+
 #[tauri::command]
-pub fn create_course(parent_path: String, name: String) -> Result<CreatedCourse, String> {
+pub fn create_course(name: String) -> Result<CreatedCourse, String> {
     let title = validate_directory_name(&name).ok_or_else(|| "invalidName".to_string())?;
 
     let slug = slugify(title);
@@ -75,7 +82,7 @@ pub fn create_course(parent_path: String, name: String) -> Result<CreatedCourse,
         format!("course_{slug}")
     };
 
-    let course_dir = Path::new(&parent_path).join(title);
+    let course_dir = course_parent_dir().join(title);
     if course_dir.exists() {
         return Err("alreadyExists".into());
     }

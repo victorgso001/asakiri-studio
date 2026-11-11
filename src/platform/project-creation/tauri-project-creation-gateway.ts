@@ -1,5 +1,4 @@
 import { invoke } from "@tauri-apps/api/core";
-import { open } from "@tauri-apps/plugin-dialog";
 import type { ProjectCreationGateway, ProjectDirectory } from "@core/projects";
 import { ProjectCreationError, type ProjectCreationErrorCode } from "@core/projects";
 import type { ProjectLocationRegistry } from "@platform/project-location/project-location-registry";
@@ -27,25 +26,10 @@ export class TauriProjectCreationGateway implements ProjectCreationGateway {
     private readonly recents: RecentProjectsStore,
   ) {}
 
-  async createCourse(request: {
-    readonly name: string;
-    readonly dialogTitle: string;
-  }): Promise<ProjectDirectory | null> {
-    const parentPath = await open({
-      directory: true,
-      multiple: false,
-      recursive: true,
-      title: request.dialogTitle,
-    });
-
-    if (!parentPath) {
-      return null;
-    }
-
+  async createCourse(request: { readonly name: string }): Promise<ProjectDirectory | null> {
     let created: CreatedCourse;
     try {
       created = await invoke<CreatedCourse>("create_course", {
-        parentPath,
         name: request.name,
       });
     } catch (error) {

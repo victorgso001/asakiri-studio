@@ -585,16 +585,16 @@
     "viewList": "List view"
   },
   "newCourse": {
-    "calloutBody": "Studio creates the folder and adds the course files.",
-    "calloutTitle": "Created locally",
-    "description": "Name the project, then choose where its folder should be created.",
-    "errorAlreadyExists": "A folder with this name already exists in that location. Pick another name.",
+    "calloutBody": "Studio creates the folder and adds the course files in the system temporary folder.",
+    "calloutTitle": "Temporary storage",
+    "description": "Name the project. Studio creates its folder in the system temporary folder.",
+    "errorAlreadyExists": "A folder with this name already exists. Pick another name.",
     "errorInvalidName": "That name cannot be used for a folder. Remove any special characters.",
-    "errorPermissionDenied": "Studio could not write to that location. Choose a different folder.",
+    "errorPermissionDenied": "Studio could not write to the temporary folder.",
     "errorUnknown": "The course could not be created. Please try again.",
     "nameHelp": "The folder uses this exact name, including capitalization.",
     "nameLabel": "Course name",
-    "submit": "Choose folder",
+    "submit": "Create course",
     "submitting": "Creating…",
     "title": "Create a course"
   },

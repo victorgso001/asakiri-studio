@@ -585,16 +585,16 @@
     "viewList": "Vista a elenco"
   },
   "newCourse": {
-    "calloutBody": "Studio crea la cartella e aggiunge i file del corso.",
-    "calloutTitle": "Creato in locale",
-    "description": "Dai un nome al progetto, poi scegli dove creare la sua cartella.",
-    "errorAlreadyExists": "Una cartella con questo nome esiste già in quella posizione. Scegli un altro nome.",
+    "calloutBody": "Studio crea la cartella e aggiunge i file del corso nella cartella temporanea di sistema.",
+    "calloutTitle": "Archivio temporaneo",
+    "description": "Dai un nome al progetto. Studio crea la sua cartella nella cartella temporanea di sistema.",
+    "errorAlreadyExists": "Una cartella con questo nome esiste già. Scegli un altro nome.",
     "errorInvalidName": "Questo nome non può essere usato per una cartella. Rimuovi eventuali caratteri speciali.",
-    "errorPermissionDenied": "Studio non può scrivere in quella posizione. Scegli un’altra cartella.",
+    "errorPermissionDenied": "Studio non può scrivere nella cartella temporanea.",
     "errorUnknown": "Impossibile creare il corso. Riprova.",
     "nameHelp": "La cartella usa esattamente questo nome, maiuscole comprese.",
     "nameLabel": "Nome del corso",
-    "submit": "Scegli cartella",
+    "submit": "Crea corso",
     "submitting": "Creazione…",
     "title": "Crea un corso"
   },

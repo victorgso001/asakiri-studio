@@ -421,12 +421,7 @@ export function App() {
       return (
         <NewCourseDialog
           onCancel={goToStart}
-          createCourse={(name) =>
-            services.creation.createCourse({
-              name,
-              dialogTitle: `Choose where to create ${name}`,
-            })
-          }
+          createCourse={(name) => services.creation.createCourse({ name })}
           onCreated={(directory) => void enterWorkspace(directory)}
         />
       );

@@ -585,16 +585,16 @@
     "viewList": "Visualização em lista"
   },
   "newCourse": {
-    "calloutBody": "O Studio cria a pasta e adiciona os ficheiros do curso.",
-    "calloutTitle": "Criado localmente",
-    "description": "Dê um nome ao projeto e depois escolha onde a pasta deve ser criada.",
-    "errorAlreadyExists": "Já existe uma pasta com este nome nesse local. Escolha outro nome.",
+    "calloutBody": "O Studio cria a pasta e adiciona os ficheiros do curso na pasta temporária do sistema.",
+    "calloutTitle": "Armazenamento temporário",
+    "description": "Dê um nome ao projeto. O Studio cria a pasta na pasta temporária do sistema.",
+    "errorAlreadyExists": "Já existe uma pasta com este nome. Escolha outro nome.",
     "errorInvalidName": "Esse nome não pode ser usado para uma pasta. Remova os caracteres especiais.",
-    "errorPermissionDenied": "O Studio não conseguiu escrever nesse local. Escolha outra pasta.",
+    "errorPermissionDenied": "O Studio não conseguiu escrever na pasta temporária.",
     "errorUnknown": "Não foi possível criar o curso. Tente novamente.",
     "nameHelp": "A pasta usa exatamente este nome, incluindo maiúsculas e minúsculas.",
     "nameLabel": "Nome do curso",
-    "submit": "Escolher pasta",
+    "submit": "Criar curso",
     "submitting": "A criar…",
     "title": "Criar um curso"
   },

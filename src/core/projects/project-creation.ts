@@ -14,8 +14,5 @@ export class ProjectCreationError extends Error {
 }
 
 export interface ProjectCreationGateway {
-  createCourse(request: {
-    readonly name: string;
-    readonly dialogTitle: string;
-  }): Promise<ProjectDirectory | null>;
+  createCourse(request: { readonly name: string }): Promise<ProjectDirectory | null>;
 }
