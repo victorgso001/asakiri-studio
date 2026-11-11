@@ -65,14 +65,27 @@ struct CourseProject {
 }
 
 /// Courses are stored in the system temporary directory (`/tmp` on Linux)
-/// instead of a user-picked location. Replace this with the original
-/// `parent_path` argument to restore choosing a folder in the native dialog.
+/// instead of a user-picked location.
 fn course_parent_dir() -> std::path::PathBuf {
     std::env::temp_dir()
 }
 
+/// Logs the underlying filesystem failure so it is not swallowed by the generic
+/// error code the frontend shows to the user.
+fn course_creation_error(action: &str, target: &Path, error: &std::io::Error) -> String {
+    eprintln!(
+        "create_course: could not {action} {}: {error}",
+        target.display()
+    );
+    match error.kind() {
+        std::io::ErrorKind::PermissionDenied => "permissionDenied".to_string(),
+        std::io::ErrorKind::AlreadyExists => "alreadyExists".to_string(),
+        _ => "unknown".to_string(),
+    }
+}
+
 #[tauri::command]
-pub fn create_course(name: String) -> Result<CreatedCourse, String> {
+pub fn create_course(parent_path: Option<String>, name: String) -> Result<CreatedCourse, String> {
     let title = validate_directory_name(&name).ok_or_else(|| "invalidName".to_string())?;
 
     let slug = slugify(title);
@@ -82,12 +95,19 @@ pub fn create_course(name: String) -> Result<CreatedCourse, String> {
         format!("course_{slug}")
     };
 
-    let course_dir = course_parent_dir().join(title);
+    // Older frontends still send this argument; without it the course goes to
+    // the system temporary directory.
+    let parent = parent_path
+        .filter(|path| !path.trim().is_empty())
+        .map(std::path::PathBuf::from)
+        .unwrap_or_else(course_parent_dir);
+    let course_dir = parent.join(title);
     if course_dir.exists() {
         return Err("alreadyExists".into());
     }
 
-    fs::create_dir_all(&course_dir).map_err(|_| "unknown".to_string())?;
+    fs::create_dir_all(&course_dir)
+        .map_err(|error| course_creation_error("create", &course_dir, &error))?;
 
     let manifest = serde_json::json!({
         "format": "asakiri-course",
@@ -106,7 +126,9 @@ pub fn create_course(name: String) -> Result<CreatedCourse, String> {
     });
     let manifest_text =
         serde_json::to_string_pretty(&manifest).map_err(|_| "unknown".to_string())?;
-    fs::write(course_dir.join("project.json"), manifest_text).map_err(|_| "unknown".to_string())?;
+    let manifest_path = course_dir.join("project.json");
+    fs::write(&manifest_path, manifest_text)
+        .map_err(|error| course_creation_error("write", &manifest_path, &error))?;
 
     Ok(CreatedCourse {
         name: title.to_string(),
